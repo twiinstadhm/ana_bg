@@ -134,6 +134,7 @@ def main():
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
     app.add_handler(MessageHandler(filters.Document.IMAGE, handle_document))
 
+    # استخدام Polling
     app.run_polling()
 
 if __name__ == "__main__":
