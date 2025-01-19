@@ -12,9 +12,14 @@ import time
 # تحميل المتغيرات من ملف .env (للتطوير المحلي)
 load_dotenv()
 
+# المسار الجديد لمجلد التحميل
+download_dir = "./downloads"
+
+# إنشاء مجلد التحميل إذا لم يكن موجودًا
+os.makedirs(download_dir, exist_ok=True)
+
 # إعداد ChromeDriver
-chrome_driver_path = "/app/.chromedriver/bin/chromedriver"  # المسار في Heroku
-download_dir = "/app/downloads"  # مجلد التحميل في Heroku
+chrome_driver_path = "/app/.chromedriver/bin/chromedriver"  # المسار في Render
 
 # إعداد الخيارات لـ Chrome
 options = webdriver.ChromeOptions()
@@ -85,7 +90,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     photo = update.message.photo[-1]
     file = await context.bot.get_file(photo.file_id)
-    file_path = f"{download_dir}/input.jpg"
+    file_path = f"{download_dir}/input.jpg"  # استخدام المسار الجديد
     await file.download_to_drive(file_path)
     
     await update.message.reply_text("جاري معالجة الصورة...")
@@ -102,7 +107,7 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     document = update.message.document
     file = await context.bot.get_file(document.file_id)
-    file_path = f"{download_dir}/{document.file_name}"
+    file_path = f"{download_dir}/{document.file_name}"  # استخدام المسار الجديد
     await file.download_to_drive(file_path)
 
     await update.message.reply_text("جاري معالجة الصورة...")
