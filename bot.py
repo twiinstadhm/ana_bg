@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 from dotenv import load_dotenv
 import os
 import time
@@ -22,41 +23,41 @@ os.makedirs(download_dir, exist_ok=True)
 # إعداد ChromeDriver باستخدام webdriver-manager
 chrome_driver_path = ChromeDriverManager().install()
 
-# إعداد الخيارات لـ Chrome
-options = webdriver.ChromeOptions()
-options.add_argument("--headless")
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
-options.add_argument("--disable-gpu")
-options.add_argument("--remote-debugging-port=9222")
-options.add_argument("--disable-software-rasterizer")
-options.add_argument("--disable-extensions")
-options.add_argument("--disable-background-networking")
-options.add_argument("--disable-background-timer-throttling")
-options.add_argument("--disable-backgrounding-occluded-windows")
-options.add_argument("--disable-breakpad")
-options.add_argument("--disable-client-side-phishing-detection")
-options.add_argument("--disable-component-update")
-options.add_argument("--disable-default-apps")
-options.add_argument("--disable-domain-reliability")
-options.add_argument("--disable-features=AudioServiceOutOfProcess")
-options.add_argument("--disable-hang-monitor")
-options.add_argument("--disable-ipc-flooding-protection")
-options.add_argument("--disable-popup-blocking")
-options.add_argument("--disable-prompt-on-repost")
-options.add_argument("--disable-renderer-backgrounding")
-options.add_argument("--disable-sync")
-options.add_argument("--force-color-profile=srgb")
-options.add_argument("--metrics-recording-only")
-options.add_argument("--no-first-run")
-options.add_argument("--safebrowsing-disable-auto-update")
-options.add_argument("--enable-automation")
-options.add_argument("--password-store=basic")
-options.add_argument("--use-mock-keychain")
-options.add_argument(f"--user-data-dir={download_dir}")
+# إعداد خيارات Chrome
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--remote-debugging-port=9222")
+chrome_options.add_argument("--disable-software-rasterizer")
+chrome_options.add_argument("--disable-extensions")
+chrome_options.add_argument("--disable-background-networking")
+chrome_options.add_argument("--disable-background-timer-throttling")
+chrome_options.add_argument("--disable-backgrounding-occluded-windows")
+chrome_options.add_argument("--disable-breakpad")
+chrome_options.add_argument("--disable-client-side-phishing-detection")
+chrome_options.add_argument("--disable-component-update")
+chrome_options.add_argument("--disable-default-apps")
+chrome_options.add_argument("--disable-domain-reliability")
+chrome_options.add_argument("--disable-features=AudioServiceOutOfProcess")
+chrome_options.add_argument("--disable-hang-monitor")
+chrome_options.add_argument("--disable-ipc-flooding-protection")
+chrome_options.add_argument("--disable-popup-blocking")
+chrome_options.add_argument("--disable-prompt-on-repost")
+chrome_options.add_argument("--disable-renderer-backgrounding")
+chrome_options.add_argument("--disable-sync")
+chrome_options.add_argument("--force-color-profile=srgb")
+chrome_options.add_argument("--metrics-recording-only")
+chrome_options.add_argument("--no-first-run")
+chrome_options.add_argument("--safebrowsing-disable-auto-update")
+chrome_options.add_argument("--enable-automation")
+chrome_options.add_argument("--password-store=basic")
+chrome_options.add_argument("--use-mock-keychain")
+chrome_options.add_argument(f"--user-data-dir={download_dir}")
 
 # إعداد تفضيلات التحميل
-options.add_experimental_option("prefs", {
+chrome_options.add_experimental_option("prefs", {
     "download.default_directory": download_dir,
     "download.prompt_for_download": False,
     "download.directory_upgrade": True,
@@ -65,7 +66,7 @@ options.add_experimental_option("prefs", {
 
 # دالة لمعالجة الصور باستخدام Selenium
 def process_image(image_path):
-    driver = webdriver.Chrome(service=Service(chrome_driver_path), options=options)
+    driver = webdriver.Chrome(service=Service(chrome_driver_path), options=chrome_options)
     driver.get("https://www.pixelcut.ai/t/background-remover")
     try:
         wait = WebDriverWait(driver, 20)
