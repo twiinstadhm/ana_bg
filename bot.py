@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 from dotenv import load_dotenv
 import os
 import time
@@ -18,8 +19,8 @@ download_dir = "./downloads"
 # إنشاء مجلد التحميل إذا لم يكن موجودًا
 os.makedirs(download_dir, exist_ok=True)
 
-# إعداد ChromeDriver
-chrome_driver_path = "/app/.chromedriver/bin/chromedriver"  # المسار في Render
+# إعداد ChromeDriver باستخدام webdriver-manager
+chrome_driver_path = ChromeDriverManager().install()
 
 # إعداد الخيارات لـ Chrome
 options = webdriver.ChromeOptions()
